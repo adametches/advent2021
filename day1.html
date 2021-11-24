@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Run Script</title>
+</head>
+<body>
+  <textarea id="code">return 1 + 4;</textarea>
+  <button onclick="run()">Run</button>
+  <pre id="result"></pre>
+  <script>
+    function run () {
+      const code = document.getElementById('code').value
+      const resultEl = document.getElementById('result')
+      const fn = new Function(code)
+      resultEl.innerHTML = fn()
+    }
+  </script>
+</body>
+</html>
