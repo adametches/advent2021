@@ -2,36 +2,85 @@
 <html>
 
 <head>
-    <title>Run Script</title>
+    <title>Advent of Code 2021</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body onload="loaded()">
-    <textarea id="code">
+    <header>
+        <div>
+            <h3>Adam Etches / Advent of Code / 2021</h3>
+        </div>
+        <div>
+            <h4>Advent of Code</h4> 
+            <a>1</a>
+            <a>2</a>
 
-  </textarea>
+        </div>
+    </header>
+    <div>
+
+        <div id="myDiv" contenteditable="true">
+          
+        </div>
+
+</div>
     <button onclick="run()">Run</button>
+<div>
+    <textarea id="data" style="width: 100vw; height: 330px"">
 
-    <script id='solution'>
-        function loaded() {
-            document.getElementById("code").value = document.getElementById("solution").text;
-            
-        }
+    </textarea>
+</div>
+    <textarea id="answer" style="width: 100vw; height: 330px"">
+
+    </textarea>
+    <script id='solution' src="dayone.js">
+       
+
+
+        var inputdata;    
         function solution() {
-
-            $.get("https://adventofcode.com/2020/day/1/input", function (data) {
+        datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt";
+            $.get(datalocation, function (data) {
                 console.log("Data: " + data);
-                document.getElementById("code").text = data;
+                inputdata = data;
+                document.getElementById("data").value = data;
             });
+
+        const datArray = inputdata.split('\n');
+
+
+        }
+
+    </script>
+    <script src="syntaxHighlight.js"></script>
+    <script>
+       
+        var solutionjs;
+        solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayone.js";
+        $.get(solutionlocation, function (data) {
+                
+                solutionjs = data;
+            });
+
+
+        var inputdata;
+        function loaded() {
+
+            //document.getElementById("myDiv").innerHTML = document.getElementById("solution").text;
+            document.getElementById("myDiv").innerHTML = solutionjs
+            w3CodeColor("myDiv","js");
         }
         function run() {
             solution()
         }
 
 
-
-
     </script>
+    
+    
+    
 </body>
 
 </html>

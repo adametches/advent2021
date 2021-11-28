@@ -1,11 +1,13 @@
-import {$,jQuery} from 'jquery';
+var inputdata;    
+function solution() {
 
-function readdata()
-
-    $.get("https://adventofcode.com/2020/day/1/input", function(data){
+    $.get("https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt", function (data) {
         console.log("Data: " + data);
+        inputdata = data;
+        document.getElementById("data").value = data;
     });
-    https://adventofcode.com/2020/day/1/input
+
+    const datArray = inputdata.split('\n');
 
 
-readdata()
+}
