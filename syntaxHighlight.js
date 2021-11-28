@@ -22,7 +22,7 @@ function w3CodeColor(elmnt, mode) {
     if (lang == "html") {elmntTxt = htmlMode(elmntTxt);}
     if (lang == "css") {elmntTxt = cssMode(elmntTxt);}
     if (lang == "js") {elmntTxt = jsMode(elmntTxt);}
-    console.log(elmntTxt)
+
 
     elmntObj.innerHTML = elmntTxt.replace(/\n/g, "<br>");;
   
