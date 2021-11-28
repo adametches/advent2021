@@ -59,9 +59,11 @@
        
         var solutionjs;
         solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayone.js";
-        $.get(solutionlocation, function (data) {
+        $.get(solutionlocation, function (jscode) {
                 
-                solutionjs = data;
+                solutionjs = jscode;
+                document.getElementById("myDiv").innerHTML = solutionjs
+                w3CodeColor("myDiv","js");
             });
 
 
