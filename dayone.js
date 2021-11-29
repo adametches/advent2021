@@ -1,10 +1,17 @@
 var inputdata;
-function solution() {
-    $.get("https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt", function (data) {
-        console.log("Data: " + data);
-        inputdata = data;
-        document.getElementById("data").value = data;
-    });
+function solution(inputdata) {
 
     const datArray = inputdata.split('\n');
+    let result = datArray.map(function(num1) {
+        datArray.map(function(num2, num1) {
+            if (num1 * num2 == 2021){
+
+                return [1,4]
+            }
+            })
+      })
+ 
+
+
+
 }

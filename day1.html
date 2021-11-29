@@ -2,87 +2,67 @@
 <html>
 
 <head>
-    <title>Advent of Code 2021</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <link rel="stylesheet" href="main.css">
+  <title>Advent of Code 2021</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body onload="loaded()">
-    <header>
-        <div>
-            <h3>Adam Etches / Advent of Code / 2021</h3>
-        </div>
-        <div>
-            <h4>Advent of Code</h4> 
-            <a id="dayone" onclick="switchDay(this)"> [1]</a>
-            <a id="daytwo" onclick="switchDay(this)"> [2]</a>
-
-        </div>
-    </header>
+  <header>
     <div>
-
-        <div id="myDiv" contenteditable="true">
-          
-        </div>
-
-</div>
-    <a onclick="run()">[Run Solution]</a>
-<div>
-    <textarea id="data" style="width: 100vw; height: 330px"">
-
-    </textarea>
-</div>
-    <textarea id="answer" style="width: 100vw; height: 330px"">
-
-    </textarea>
-    <script id='solution' src="dayone.js">
-       
-
-
-        var inputdata;    
-        function solution() {
-        datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt";
-            $.get(datalocation, function (data) {
-                console.log("Data: " + data);
-                inputdata = data;
-                document.getElementById("data").value = data;
-            });
-
-        const datArray = inputdata.split('\n');
-
-
-        }
-
-    </script>
-    <script src="syntaxHighlight.js"></script>
+      <h3>Adam Etches / Advent of Code / 2021</h3>
+    </div>
+    <div>
+      <h4>Advent of Code</h4>
+      <a id="dayone" onclick="switchDay(this)"> [1]</a>
+      <a id="daytwo" onclick="switchDay(this)"> [2]</a>
+    </div>
+  </header>
+  <div>
+    <h4>Solution <span id="whichday">dayone</span> </h4>
+    <div id="displaySolutionCode" </div><br>
+  </div>
+    <br><a onclick="run()">[Run Solution]</a>
+    <br><div id="displaySolutionResult" </div>
+    <br><div id="displaySolutionData" </div>
+     
+    <script src=" syntaxHighlight.js"></script>
+    <script id='solution' src="dayone.js"></script>
     <script>
-       
-        var solutionjs;
-        solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayone.js";
-        $.get(solutionlocation, function (jscode) {
-                
-                solutionjs = jscode;
-                solutionjs = solutionjs.replace('    ','\t');
-                document.getElementById("myDiv").innerHTML = solutionjs
-                w3CodeColor("myDiv","js");
-            });
+      var solutionDay = 'dayone';
+      var inputdata;
+      var solutionjs;
 
+      datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt";
+      $.get(datalocation, function (data) {
+        inputdata = data;    
+      });
 
-        var inputdata;
-        function loaded() {
+     
+      solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayone.js";
+      $.get(solutionlocation, function (jscode) {
+        solutionjs = jscode;
+        solutionjs = solutionjs.replace('    ', '\t');
+        document.getElementById("displaySolutionCode").innerHTML = solutionjs
+        w3CodeColor("displaySolutionCode", "js");
+      });
 
-            //document.getElementById("myDiv").innerHTML = document.getElementById("solution").text;
-            document.getElementById("myDiv").innerHTML = solutionjs
-            w3CodeColor("myDiv","js");
-        }
+      function loaded() {
+        document.getElementById('whichday').innerHTML = solutionDay;
+        document.getElementById("displaySolutionCode").innerHTML = solutionjs
+        w3CodeColor("displaySolutionCode", "js");
+      };
 
-        function switchDay(object) {
-            console.log(object.id)
-        }
+      function switchDay(object) {
+        console.log(object.id)
+      };
 
-        function run() {
-            solution()
-        }
+      function run() {
+        
+        solution(inputdata)
+        document.getElementById("displaySolutionResult").innerHTML = "3456,2344";
+        document.getElementById("displaySolutionData").innerHTML = inputdata;
+      };
 
 
     </script>
