@@ -2,73 +2,85 @@
 <html>
 
 <head>
-  <title>Advent of Code 2021</title>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <link rel="stylesheet" href="main.css">
+    <title>Advent of Code 2021</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body onload="loaded()">
-  <header>
+    <header>
+        <div>
+            <h3>Adam Etches / Advent of Code / 2021</h3>
+        </div>
+        <div>
+            <h4>Advent of Code</h4>
+            <a id="dayone" onclick="switchDay(this)"> [1]</a>
+            <a id="daytwo" onclick="switchDay(this)"> [2]</a>
+        </div>
+    </header>
     <div>
-      <h3>Adam Etches / Advent of Code / 2021</h3>
-    </div>
-    <div>
-      <h4>Advent of Code</h4>
-      <a id="dayone" onclick="switchDay(this)"> [1]</a>
-      <a id="daytwo" onclick="switchDay(this)"> [2]</a>
-    </div>
-  </header>
-  <div>
-    <h4>Solution <span id="whichday">dayone</span> </h4>
-    <div id="displaySolutionCode" </div><br>
-  </div>
-    <br><a onclick="run()">[Run Solution]</a>
-    <br><div id="displaySolutionResult">Solution Result</div> 
-<div id="displaySolutionData">Solution Data</div> 
-     
-    <script src=" syntaxHighlight.js"></script>
-    <script id='solution' src="dayone.js"></script>
-    <script>
-      var solutionDay = 'dayone';
-      var inputdata;
-      var solutionjs;
+        <h4>Solution <span id="whichday">dayone</span> </h4>
+        <div id="displaySolutionCode" style="padding-left:20px" </div><br>
+        </div>
+        <br><a onclick="run()">[Run Solution]</a>
+        <p>Solution Result:</p>
 
-      datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayonedata.txt";
-      $.get(datalocation, function (data) {
-        inputdata = data;    
-      });
+        <div id="displaySolutionResult" style="padding-left:20px"></div>
+        <p>Solution Data:</p>
+        <div id="displaySolutionData" style="padding-left:20px"></div>
 
-     
-      solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/dayone.js";
-      $.get(solutionlocation, function (jscode) {
-        solutionjs = jscode;
-        solutionjs = solutionjs.replace('    ', '\t');
-        document.getElementById("displaySolutionCode").innerHTML = solutionjs
-        w3CodeColor("displaySolutionCode", "js");
-      });
-
-      function loaded() {
-        document.getElementById('whichday').innerHTML = solutionDay;
-        document.getElementById("displaySolutionCode").innerHTML = solutionjs
-        w3CodeColor("displaySolutionCode", "js");
-      };
-
-      function switchDay(object) {
-        console.log(object.id)
-      };
-
-      function run() {
-        
-        result = solution(inputdata)
-        document.getElementById("displaySolutionResult").innerHTML = result;
-        document.getElementById("displaySolutionData").innerHTML = inputdata;
-      };
+        <script src=" syntaxHighlight.js"></script>
+        <!--script id='solution' src="dayone.js"></script-->
+        <script>
+            var solutionDay = 'dayone';
+            var inputdata;
+            var solutionjs;
 
 
-    </script>
-    
-    
-    
+            var script = document.createElement("script");
+            script.src = "dayone.js";
+            document.head.appendChild(script);
+
+            function loadsolution() {
+                datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + "data.txt";
+                $.get(datalocation, function (data) {
+                    inputdata = data;
+                });
+
+
+                solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + ".js";
+                $.get(solutionlocation, function (jscode) {
+                    solutionjs = jscode;
+                    solutionjs = solutionjs.replace('    ', '\t');
+                    document.getElementById("displaySolutionCode").innerHTML = solutionjs
+                    w3CodeColor("displaySolutionCode", "js");
+                });
+            }
+
+            function loaded() {
+                loadsolution();
+                document.getElementById('whichday').innerHTML = solutionDay;
+                document.getElementById("displaySolutionCode").innerHTML = solutionjs
+                w3CodeColor("displaySolutionCode", "js");
+            };
+
+            function switchDay(object) {
+                solutionDay = object.id;
+                loadsolution();
+            };
+
+            function run() {
+
+                result = solution(inputdata)
+                document.getElementById("displaySolutionResult").innerHTML = result;
+                document.getElementById("displaySolutionData").innerHTML = inputdata;
+            };
+
+
+        </script>
+
+
+
 </body>
 
 </html>
