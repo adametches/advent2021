@@ -2,25 +2,14 @@ function w3CodeColor(elmnt, mode) {
     var lang = (mode || "html");
     var elmntObj = (document.getElementById(elmnt) || elmnt);
     var elmntTxt = elmntObj.innerHTML;
-    var tagcolor = "mediumblue";
-    var tagnamecolor = "brown";
-    var attributecolor = "red";
-    var attributevaluecolor = "mediumblue";
     var commentcolor = "green";
-    var cssselectorcolor = "brown";
-    var csspropertycolor = "red";
-    var csspropertyvaluecolor = "mediumblue";
-    var cssdelimitercolor = "white";
-    var cssimportantcolor = "red";  
     var jscolor = "white";
-    var jskeywordcolor = "mediumblue";
+    var jskeywordcolor = "DarkSeaGreen";
     var jsstringcolor = "brown";
-    var jsnumbercolor = "red";
+    var jsnumbercolor = "brown";
     var jspropertycolor = "white";
     elmntObj.style.fontFamily = "Consolas,'Courier New', monospace";
     if (!lang) {lang = "html"; }
-    if (lang == "html") {elmntTxt = htmlMode(elmntTxt);}
-    if (lang == "css") {elmntTxt = cssMode(elmntTxt);}
     if (lang == "js") {elmntTxt = jsMode(elmntTxt);}
 
 

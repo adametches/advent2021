@@ -20,20 +20,20 @@
     </header>
     <div>
 
-        <h4><em></em>Solution <span id="whichday">dayone</span><em></em> </h4>
-        <pre>
-        <div id="displaySolutionCode" style="padding-left:20px" </div><br>
+        <p><em>Solution <span id="whichday">dayone</span></em> </p>
+        <pre style="margin-top :0px">
+         <div id="displaySolutionCode" style="padding-left:20px;margin-top :0px"" </div>
+        </pre>
         </div>
-    </pre>
+        
         <br><a onclick="run()">[Run Solution]</a>
         <p><em>Solution Result:</em></p>
 
         <div id="displaySolutionResult" style="padding-left:20px"></div>
-        <p><em></em>Solution Data:<em></p>
+        <p><em>Solution Data:</em></p>
         <div id="displaySolutionData" style="padding-left:20px"></div>
 
         <script src=" syntaxHighlight.js"></script>
-        <!--script id='solution' src="dayone.js"></script-->
         <script>
             var solutionDay = 'dayone';
             var inputdata;
@@ -54,7 +54,6 @@
                 solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + ".js";
                 $.get(solutionlocation, function (jscode) {
                     solutionjs = jscode;
-                    solutionjs = solutionjs.replace('    ', '\t');
                     document.getElementById("displaySolutionCode").innerHTML = solutionjs
                     w3CodeColor("displaySolutionCode", "js");
 
@@ -65,12 +64,15 @@
                 loadsolution();
                 document.getElementById('whichday').innerHTML = solutionDay;
                 document.getElementById("displaySolutionCode").innerHTML = solutionjs;
-                document.getElementById("s1").innerHTML = solutionjs;
                 w3CodeColor("displaySolutionCode", "js");
             };
 
             function switchDay(object) {
                 solutionDay = object.id;
+                document.getElementById('whichday').innerHTML = object.id;
+                document.getElementById("displaySolutionResult").innerHTML = "";
+                document.getElementById("displaySolutionData").innerHTML = "";
+
                 loadsolution();
             };
 

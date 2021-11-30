@@ -1,4 +1,3 @@
-
 function solution(inputdata) {
     const dataArray = inputdata.split('\n');
     var num1 =20, num2 = 10;
