@@ -1,17 +1,18 @@
 var inputdata;
 function solution(inputdata) {
 
-    const datArray = inputdata.split('\n');
-    let result = datArray.map(function(num1) {
-        datArray.map(function(num2, num1) {
-            if (num1 * num2 == 2021){
-
-                return [1,4]
+    const dataArray = inputdata.split('\n');
+    var num1 =20, num2 = 10;
+    dataArray.forEach((firstVal) => {
+        dataArray.forEach((secondVal) => {
+            prod = parseInt(firstVal) + parseInt(secondVal);
+            if (prod == 2020){
+                num1 = firstVal;
+                num2 = secondVal;
             }
-            })
-      })
- 
-
-
+        });
+    });
+    return num1  * num2;
+   
 
 }
