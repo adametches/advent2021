@@ -23,8 +23,8 @@
     <div id="displaySolutionCode" </div><br>
   </div>
     <br><a onclick="run()">[Run Solution]</a>
-    <br><div id="displaySolutionResult" </div>
-    <br><div id="displaySolutionData" </div>
+    <br><div id="displaySolutionResult">Solution Result</div> 
+<div id="displaySolutionData">Solution Data</div> 
      
     <script src=" syntaxHighlight.js"></script>
     <script id='solution' src="dayone.js"></script>
@@ -59,8 +59,8 @@
 
       function run() {
         
-        solution(inputdata)
-        document.getElementById("displaySolutionResult").innerHTML = "3456,2344";
+        result = solution(inputdata)
+        document.getElementById("displaySolutionResult").innerHTML = result;
         document.getElementById("displaySolutionData").innerHTML = inputdata;
       };
 
