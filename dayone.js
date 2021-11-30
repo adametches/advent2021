@@ -1,6 +1,5 @@
-var inputdata;
-function solution(inputdata) {
 
+function solution(inputdata) {
     const dataArray = inputdata.split('\n');
     var num1 =20, num2 = 10;
     dataArray.forEach((firstVal) => {
@@ -13,6 +12,4 @@ function solution(inputdata) {
         });
     });
     return num1  * num2;
-   
-
 }

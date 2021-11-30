@@ -13,20 +13,23 @@
             <h3>Adam Etches / Advent of Code / 2021</h3>
         </div>
         <div>
-            <h4>Advent of Code</h4>
+            <p><em>Advent of Code</em></p>
             <a id="dayone" onclick="switchDay(this)"> [1]</a>
             <a id="daytwo" onclick="switchDay(this)"> [2]</a>
         </div>
     </header>
     <div>
-        <h4>Solution <span id="whichday">dayone</span> </h4>
+
+        <h4><em></em>Solution <span id="whichday">dayone</span><em></em> </h4>
+        <pre>
         <div id="displaySolutionCode" style="padding-left:20px" </div><br>
         </div>
+    </pre>
         <br><a onclick="run()">[Run Solution]</a>
-        <p>Solution Result:</p>
+        <p><em>Solution Result:</em></p>
 
         <div id="displaySolutionResult" style="padding-left:20px"></div>
-        <p>Solution Data:</p>
+        <p><em></em>Solution Data:<em></p>
         <div id="displaySolutionData" style="padding-left:20px"></div>
 
         <script src=" syntaxHighlight.js"></script>
@@ -54,13 +57,15 @@
                     solutionjs = solutionjs.replace('    ', '\t');
                     document.getElementById("displaySolutionCode").innerHTML = solutionjs
                     w3CodeColor("displaySolutionCode", "js");
+
                 });
             }
 
             function loaded() {
                 loadsolution();
                 document.getElementById('whichday').innerHTML = solutionDay;
-                document.getElementById("displaySolutionCode").innerHTML = solutionjs
+                document.getElementById("displaySolutionCode").innerHTML = solutionjs;
+                document.getElementById("s1").innerHTML = solutionjs;
                 w3CodeColor("displaySolutionCode", "js");
             };
 
