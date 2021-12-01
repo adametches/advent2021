@@ -15,14 +15,14 @@
         <div>
             <p><em>Advent of Code</em></p>
             <a id="dayone" onclick="switchDay(this)"> [1]</a>
-            <!--a id="daytwo" onclick="switchDay(this)"> [2]</a-->
+            <a id="daytwo" onclick="switchDay(this)"> [2]</a>
         </div>
     </header>
     <div>
 
-        <p><em>Solution <span id="whichday">dayone</span></em> </p>
+        <p><em>Solution <span id="whichDay">dayone</span></em> </p>
         <pre style="margin-top :0px">
-         <div id="displaySolutionCode" style="padding-left:20px;margin-top :0px"" </div>
+         <div id="displaySolutionCode" style="padding-left:20px;margin-top :0px; overflow:scroll; max-height:400px;" </div>
         </pre>
         </div>
         
@@ -36,13 +36,14 @@
 
         <script src=" syntaxHighlight.js"></script>
         <script>
-            var solutionDay = 'dayone';
+            var solutionDay = 'daytwo';
             var inputData;
             var solutionJs;
 
 
             var script = document.createElement("script");
-            script.src = "dayone.js";
+            script.id = "solutionCode"
+            script.src = solutionDay + ".js";
             document.head.appendChild(script);
 
             function loadSolution() {
@@ -69,8 +70,16 @@
             };
 
             function switchDay(object) {
+
                 solutionDay = object.id;
-                document.getElementById('whichDay').innerHTML = object.id;
+                document.getElementById('whichDay').innerHTML = solutionDay;
+                           
+                document.getElementById('solutionCode').remove();
+                var script = document.createElement("script");
+                script.id = "solutionCode"
+                script.src = solutionDay + ".js";
+                document.head.appendChild(script);
+
                 document.getElementById("displaySolutionResult").innerHTML = "";
                 document.getElementById("displaySolutionData").innerHTML = "";
 
@@ -89,8 +98,9 @@
                 result = solutionPart2(inputData)
                 document.getElementById("displaySolutionResult").innerHTML = result;
                 document.getElementById("displaySolutionData").innerHTML = inputData;
-};
+            };
 
+          
 
         </script>
 
