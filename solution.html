@@ -12,15 +12,16 @@
         <div>
             <h3>Adam Etches / Advent of Code / 2021</h3>
         </div>
-        <div>
+        <div id='days'>
             <p><em>Advent of Code</em></p>
-            <a id="dayone" onclick="switchDay(this)"> [1]</a>
-            <a id="daytwo" onclick="switchDay(this)"> [2]</a>
+            <a id="dayone" data-day="1" onclick="switchDay(this)"> [1]</a>
+            <a id="daytwo" data-day="2" onclick="switchDay(this)"> [2]</a>
         </div>
     </header>
     <div>
-
-        <p><em>Solution <span id="whichDay">dayone</span></em> </p>
+        
+        <p><em>Solution <span id="whichDay">dayone</span></em> <a id = aocLink href=""></a></p> 
+        
         <pre style="margin-top :0px">
          <div id="displaySolutionCode" style="padding-left:20px;margin-top :0px; overflow:scroll; max-height:400px;" </div>
         </pre>
@@ -37,6 +38,9 @@
         <script src=" syntaxHighlight.js"></script>
         <script>
             var solutionDay = 'daytwo';
+            var solutionDayNumber = '1';
+            const aocUrlBase = "https://adventofcode.com/2021/day/"
+
             var inputData;
             var solutionJs;
 
@@ -65,6 +69,9 @@
             function loaded() {
                 loadSolution();
                 document.getElementById('whichDay').innerHTML = solutionDay;
+                document.getElementById('aocLink').innerHTML = aocUrlBase + solutionDayNumber;   
+                document.getElementById('aocLink').href = aocUrlBase + solutionDayNumber; ;            
+
                 document.getElementById("displaySolutionCode").innerHTML = solutionJs;
                 w3CodeColor("displaySolutionCode", "js");
             };
@@ -72,6 +79,11 @@
             function switchDay(object) {
 
                 solutionDay = object.id;
+                solutionDayNumber = object.dataset.day;
+
+                document.getElementById('aocLink').innerHTML = aocUrlBase + solutionDayNumber;   
+                document.getElementById('aocLink').href = aocUrlBase + solutionDayNumber; ;   
+
                 document.getElementById('whichDay').innerHTML = solutionDay;
                            
                 document.getElementById('solutionCode').remove();
