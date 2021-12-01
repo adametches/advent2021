@@ -26,7 +26,8 @@
         </pre>
         </div>
         
-        <br><a onclick="run()">[Run Solution]</a>
+        <br><a onclick="runPart1()">[Run Solution 1]</a>
+        <a onclick="runPart2()">[Run Solution 2]</a>
         <p><em>Solution Result:</em></p>
 
         <div id="displaySolutionResult" style="padding-left:20px"></div>
@@ -36,52 +37,59 @@
         <script src=" syntaxHighlight.js"></script>
         <script>
             var solutionDay = 'dayone';
-            var inputdata;
-            var solutionjs;
+            var inputData;
+            var solutionJs;
 
 
             var script = document.createElement("script");
             script.src = "dayone.js";
             document.head.appendChild(script);
 
-            function loadsolution() {
-                datalocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + "data.txt";
-                $.get(datalocation, function (data) {
-                    inputdata = data;
+            function loadSolution() {
+                dataLocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + "data.txt";
+                $.get(dataLocation, function (data) {
+                    inputData = data;
                 });
 
 
-                solutionlocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + ".js";
-                $.get(solutionlocation, function (jscode) {
-                    solutionjs = jscode;
-                    document.getElementById("displaySolutionCode").innerHTML = solutionjs
+                solutionLocation = "https://raw.githubusercontent.com/adametches/advent2021/main/" + solutionDay + ".js";
+                $.get(solutionLocation, function (jscode) {
+                    solutionJs = jscode;
+                    document.getElementById("displaySolutionCode").innerHTML = solutionJs
                     w3CodeColor("displaySolutionCode", "js");
 
                 });
             }
 
             function loaded() {
-                loadsolution();
-                document.getElementById('whichday').innerHTML = solutionDay;
-                document.getElementById("displaySolutionCode").innerHTML = solutionjs;
+                loadSolution();
+                document.getElementById('whichDay').innerHTML = solutionDay;
+                document.getElementById("displaySolutionCode").innerHTML = solutionJs;
                 w3CodeColor("displaySolutionCode", "js");
             };
 
             function switchDay(object) {
                 solutionDay = object.id;
-                document.getElementById('whichday').innerHTML = object.id;
+                document.getElementById('whichDay').innerHTML = object.id;
                 document.getElementById("displaySolutionResult").innerHTML = "";
                 document.getElementById("displaySolutionData").innerHTML = "";
 
-                loadsolution();
+                loadSolution();
             };
 
-            function run() {
+            function runPart1() {
 
-                result = solution(inputdata)
+                result = solutionPart1(inputData)
                 document.getElementById("displaySolutionResult").innerHTML = result;
-                document.getElementById("displaySolutionData").innerHTML = inputdata;
+                document.getElementById("displaySolutionData").innerHTML = inputData;
             };
+
+            function runPart2() {
+
+                result = solutionPart2(inputData)
+                document.getElementById("displaySolutionResult").innerHTML = result;
+                document.getElementById("displaySolutionData").innerHTML = inputData;
+};
 
 
         </script>
