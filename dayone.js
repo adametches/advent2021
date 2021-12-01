@@ -1,14 +1,15 @@
 function solution(inputdata) {
-    const dataArray = inputdata.split('\n');
-    var num1 =20, num2 = 10;
-    dataArray.forEach((firstVal) => {
-        dataArray.forEach((secondVal) => {
-            prod = parseInt(firstVal) + parseInt(secondVal);
-            if (prod == 2020){
-                num1 = firstVal;
-                num2 = secondVal;
+    const dataArray = inputdata.split('\n').map(Number);
+    let numberIncreased = 0;
+    dataArray.forEach((depth, index, array) => {
+       if (index > 0){
+            if (depth > array[index-1]){
+                numberIncreased += numberIncreased;
             }
-        });
+
+
+       }
+        
     });
-    return num1  * num2;
+    return numberIncreased;
 }
