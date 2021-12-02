@@ -1,10 +1,9 @@
 function solutionPart1(inputData){
     const dataArray = inputData.split('\n')
     var horizontal = 0, vertical = 0;
-    dataArray.forEach(element => {
-        var move = element.split(" ");
-        var command = move[0];
-        var value = parseInt(move[1]);
+    dataArray.forEach(element => { 
+        var [command, value] = element.split(" ");
+        value = parseInt(value);
         switch(command) {
             case "forward":
                 horizontal += value;
@@ -15,8 +14,6 @@ function solutionPart1(inputData){
             case "down":
                 vertical += value;
                 break;
-            default:
-                break;
           }        
     });
     return horizontal * vertical;
@@ -26,9 +23,8 @@ function solutionPart2(inputData){
     const dataArray = inputData.split('\n')
     var horizontal = 0, depth = 0, aim = 0;
     dataArray.forEach(element => {
-        var move = element.split(" ");
-        var command = move[0];
-        var value = parseInt(move[1]);
+        var [command, value] = element.split(" ");
+        value = parseInt(value);
         switch(command) {
             case "forward":
                 horizontal += value;
@@ -39,8 +35,6 @@ function solutionPart2(inputData){
                 break;
             case "down":
                 aim += value;
-                break;
-            default:
                 break;
           }       
     });
