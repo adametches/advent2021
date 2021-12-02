@@ -1,22 +1,19 @@
 function solutionPart1(inputData){
     const dataArray = inputData.split('\n')
-    var horizontal = 0, vertical = 0;
+    var horizontal = 0, depth = 0;
+    const moveSub = {
+        'forward': (value) => horizontal += value,
+        'up': (value) => depth -= value,
+        'down': (value) => depth += value,
+      };
+
     dataArray.forEach(element => { 
         var [command, value] = element.split(" ");
         value = parseInt(value);
-        switch(command) {
-            case "forward":
-                horizontal += value;
-                break;
-            case "up":
-                vertical -= value;
-                break;
-            case "down":
-                vertical += value;
-                break;
-          }        
+        moveSub[command](value);
+  
     });
-    return horizontal * vertical;
+    return horizontal * depth;
 }
 
 function solutionPart2(inputData){
