@@ -39,7 +39,7 @@ function solutionPart2(inputData) {
 function getCol(matrix, col) {
     var column = [];
     for (var i = 0; i < matrix.length; i++) { column.push(matrix[i][col]);}
-    return column; // return column data..
+    return column; 
 }
 function countBits(array) {
     var zeroCount = 0; oneCount = 0;
