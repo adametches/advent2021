@@ -1,6 +1,5 @@
 function solutionPart1(inputData) {
     const dataArray = inputData.split('\n').map(bits => [...bits])
-    var onecount = 0, zerocount = 0;
     var gammaRate = "", epsilonRate = "";
     tDataArray = transpose(dataArray);
     tDataArray.forEach(element => {
@@ -18,56 +17,42 @@ function solutionPart1(inputData) {
     return parseInt(gammaRate, 2) * parseInt(epsilonRate, 2);
 }
 function solutionPart2(inputData) {
-function solutionPart2_old(inputData) {
-    const dataArray = inputData.split('\n').map(bits => [...bits])
-    var oxygenArray = inputData.split('\n').map(bits => [...bits])
-    var co2Array = inputData.split('\n').map(bits => [...bits])
-    var onecount = 0, zerocount = 0;
-
-    tDataArray = transpose(dataArray);
-    //tDataArray.forEach((element, index, array) => { 
-    var index =0;
-    while (index >= 0){
-        if (index > tDataArray.length){
-            break;
-        }
-        element = tDataArray[index]
-        zerocount = element.filter(x => x === '0').length
-        onecount = element.filter(x => x === '1').length
-        var outerIndex = index;
-        if (oxygenArray.length > 1) {
-            if (zerocount > onecount) {
-                oxygenArray = oxygenArray.filter(element => element[outerIndex] == '0');
-                tDataArray = tDataArray.filter(el => el[index] === '0')
-            }
-            else if (zerocount <= onecount) {
-                oxygenArray = oxygenArray.filter(element => element[outerIndex] == '1');
-                tDataArray = tDataArray.filter(el => el[index] === '1')
-            }
-           
-        }
-        index += 1;
-        
+    var dataArray = inputData.split('\n').map(bits => [...bits])
+    var oxygenArray = dataArray;
+    var co2Array = dataArray;
+    for (let i = 0; i < dataArray[0].length; i++) {
+        colArray = getCol(oxygenArray, i);
+        bits = countBits(colArray);
+        if (bits.zeros <= bits.ones) oxygenArray = oxygenArray.filter(element => element[i] == '1');
+        else oxygenArray = oxygenArray.filter(element => element[i] == '0');
+        if (oxygenArray.length == 1) break;
     }
-    tDataArray.forEach((element, index) => {
-        zerocount = element.filter(x => x === '0').length
-        onecount = element.filter(x => x === '1').length
-        var outerIndex = index;
-        if (co2Array.length > 1) {
-            if (zerocount <= onecount) {
-                co2Array = co2Array.filter(element => element[outerIndex] == '0');
-            }
-            else if (zerocount > onecount) {
-                co2Array = co2Array.filter(element => element[outerIndex] == '1');
-            }
-        }
-    
-    });
-
-    
-    return parseInt(oxygenArray.toString().replaceAll(',',''), 2) * parseInt(co2Array.toString().replaceAll(',',''), 2);
+    for (let i = 0; i < dataArray[0].length; i++) {
+        colArray = getCol(co2Array, i);
+        bits = countBits(colArray);
+        if (bits.zeros <= bits.ones) co2Array = co2Array.filter(element => element[i] == '0');
+        else co2Array = co2Array.filter(element => element[i] == '1');
+        if (co2Array.length == 1) break;
+    }
+    return parseInt(oxygenArray.toString().replaceAll(',', ''), 2) * parseInt(co2Array.toString().replaceAll(',', ''), 2);
 }
-
+function getCol(matrix, col) {
+    var column = [];
+    for (var i = 0; i < matrix.length; i++) { column.push(matrix[i][col]);}
+    return column; // return column data..
+}
+function countBits(array) {
+    var zeroCount = 0; oneCount = 0;
+    array.forEach(element => {
+        if (element == '0') zeroCount += 1
+        else oneCount += 1
+    });
+    const bitCount = {
+        ones: oneCount,
+        zeros: zeroCount
+    };
+    return bitCount
+}
 function transpose(matrix) {
     return matrix.reduce((prev, next) => next.map((item, i) =>
         (prev[i] || []).concat(next[i])
