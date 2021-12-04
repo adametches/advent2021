@@ -1,4 +1,4 @@
-function solutionPart1(inputData) {
+function solutionPart1(inputData, all) {
     const dataArray = inputData.split('\n')
     var numbers = dataArray[0].split(",").map(Number);
     dataArray.splice(0, 1);
@@ -9,51 +9,51 @@ function solutionPart1(inputData) {
         gameBoard.push(...row)
     });
     gameBoard = gameBoard.map(Number)
-    var wimmerWinner = [];
+    var winnerWinner = [];
     var boards = chunkArray(gameBoard, 25);
     numbers.forEach(calledNumber => {
         var i = 0;
+        if (calledNumber == 49) {
+            console.log(98);
+        }
         while (i < boards.length) {
-            board = boards[i];
-            board = board.map(x => {
+            boards[i] = boards[i].map(x => {
                 if (x == calledNumber) return 'X'
                 else return x
             })
-
-            const rows = chunkArray(board, 5);
-            const columns = transpose(rows);
-
-            columns.forEach(column => {
-                if (column.filter(x => x == 'X').length == 5) {
-                    cardValue = board.filter(x => x != "X").reduce((a, b) => a + b) * calledNumber;
-                    wimmerWinner.push(cardValue)
-                    boards.splice(i, 1)
-
-                }
-            });
-
-            rows.forEach(row => {
-                if (row.filter(x => x == 'X').length == 5) {
-                    cardValue = board.filter(x => x != "X").reduce((a, b) => a + b) * calledNumber;
-                    wimmerWinner.push(cardValue)
-                    boards.splice(i, 1)
-                }
-            });
+            var res = playBingo(boards[i], calledNumber)
+            if (res != false) {
+                winnerWinner.push(res)
+                boards.splice(i, 1)
+                continue;
+            }
             i++;
         }
-        //);
-
-
     })
-
-    return wimmerWinner[0];
+    if (all) return winnerWinner
+    else return winnerWinner[0]
 }
-
 function solutionPart2(inputData) {
-    const dataArray = inputData.split('\n')
-    return "part2";
+    winner = solutionPart1(inputData, true)
+    return winner.pop();
 }
+function playBingo(board, calledNumber) {
+    const rows = chunkArray(board, 5);
+    const columns = transpose(rows);
+    returnValue = false;
+    rows.forEach(row => {
+        if (row.filter(x => x == 'X').length == 5 && returnValue == false) {
+            returnValue = board.filter(x => x != "X").reduce((a, b) => a + b) * calledNumber;
+        }
+    });
+    columns.forEach(col => {
+        if (col.filter(x => x == 'X').length == 5 && returnValue == false) {
+            returnValue = board.filter(x => x != "X").reduce((a, b) => a + b) * calledNumber;
+        }
+    });
+    return returnValue
 
+}
 function chunkArray(array, size) {
     const chunked_arr = [];
     let index = 0;
@@ -63,7 +63,6 @@ function chunkArray(array, size) {
     }
     return chunked_arr;
 }
-
 function transpose(matrix) {
     return matrix.reduce((prev, next) => next.map((item, i) =>
         (prev[i] || []).concat(next[i])
