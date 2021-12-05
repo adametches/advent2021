@@ -11,23 +11,27 @@ function solutionPart1(inputData) {
   
     });
 
-    const grid = {coords: Array.from(Array(1000), () => new Array(1000).fill(0))}
+    //const grid = {coords: Array.from(Array(1000), () => new Array(1000).fill(0))}
+    const grid = {coords: Array.from(Array(10), () => new Array(10).fill(0))}
     intersectCount = 0;
     lines.forEach(line => {
         if(line.x1 == line.x2 ){
-            for (let index = line.y1; index <line.y2 -line.y1; index++) {              
-                grid.coords[line.x1][index] += 1
-                if (grid.coords[line.x1][index] > 1) intersectCount += 1
+            if (line.y1 < line.y2) {var yMin = line.y1; var yMax = line.y2}
+            else {yMin = line.y2, yMax = line.y1}
+            for (let index = yMin; index <= yMax; index++) {              
+                grid.coords[index][line.x1] += 1
+                if (grid.coords[index][line.x1] > 1) intersectCount += 1
                 
             }
 
         }
         if(line.y1 == line.y2){
-            for (let index = line.x1; index < line.x2 -line.x1; index++) {
-                
-                grid.coords[index][line.y1] += 1
-                if (grid.coords[index][line.y1] > 1) intersectCount += 1
-                
+            if (line.x1 < line.x2) {var xMin = line.x1; xMax = line.x2}
+            else {var xMin = line.x2; var xMax = line.x1}
+            for (let index = xMin; index <= xMax; index++) {              
+                grid.coords[line.y1][index] += 1
+                if (grid.coords[line.y1][index] > 1) intersectCount += 1
+               
             }
         }
         
