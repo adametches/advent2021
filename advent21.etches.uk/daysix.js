@@ -1,73 +1,28 @@
 function solutionPart1(inputData) {
     const dataArray = inputData.split(',')
-    daysState = [dataArray];
-    for (let day = 1; day <= 80; day++) {
-        daysState[day] = daysState[day - 1]
-        daysState[day].forEach((fish, fishIndex) => {
-            fish -= 1;
-            if (fish == -1) {
-                fish = 6;
-                daysState[day].push(8)
-            }
-            daysState[day][fishIndex] = fish;
-        });
-    }
-    return daysState[80].length;
+    numberOfFish = laternfishSimulator(dataArray, 80)
+    return numberOfFish;
 }
 function solutionPart2(inputData) {
-    inputData = '3,4,3,1,2'
+    //inputData = '3,4,3,1,2'
     const dataArray = inputData.split(',')
-    numberOfFish = largeLaternfishSimulator(dataArray, 18)
+    numberOfFish = laternfishSimulator(dataArray, 256)
     return numberOfFish;
 }
 function laternfishSimulator(initialState, numberOfDays) {
-    daysState = initialState;
+    initialState = initialState.map(Number)
+    var fishCounter = {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0}   
+    for (let i = 0; i < 9; i++) {fishCounter[i] = initialState.filter(x=> x==i).length;}   
     for (let day = 1; day <= numberOfDays; day++) {
-        daysState.forEach((fish, fishIndex) => {
-            fish -= 1;
-            if (fish == -1) {
-                fish = 6;
-                daysState.push(8)
-            }
-            daysState[fishIndex] = fish;
-        });
-    }
-    return daysState.length;
-}
-
-function largeLaternfishSimulator(initialState, numberOfDays) {
-    daysState = [initialState];
-    chunkSize = 5
-    console.log("Initial state: " + daysState[0].toString())
-    for (let day = 1; day <= numberOfDays; day++) {
-        daysState.push([])
-        daysState[day].forEach((fish, fishIndex) => {
-            fish -= 1;
-            if (fish == -1) {
-                fish = 6;
-                daysState[day].push(8)
-            }
-            daysState[day][fishIndex] = fish;
-        });
-        console.log("Day " + day + " " + daysState[day].toString())
-
+        console.log("Day ", day)
+        var zeroCount = fishCounter[0]
+        for (let i = 0; i < 9; i++) {fishCounter[i] = fishCounter[i+1];}
+        fishCounter[6] = fishCounter[6] + zeroCount
+        fishCounter[8] = zeroCount
     }
     var numberOfFish = 0;
-    daysState.forEach(element => {
-        numberOfFish += element.length
-    });
-
+    for (let i = 0; i < 9; i++) {numberOfFish += fishCounter[i]}
     return numberOfFish;
 
 }
-function chunkArray(arr, n) {
-    var chunkLength = Math.max(arr.length / n, 1);
-    var chunks = [];
-    for (var i = 0; i < n; i++) {
-        if (chunkLength * (i + 1) <= arr.length) chunks.push(arr.slice(chunkLength * i, chunkLength * (i + 1)));
-    }
-    return chunks;
-}
 
-//res = solutionPart2("1,3,1,5,5,1,1,1,5,1,1,1,3,1,1,4,3,1,1,2,2,4,2,1,3,3,2,4,4,4,1,3,1,1,4,3,1,5,5,1,1,3,4,2,1,5,3,4,5,5,2,5,5,1,5,5,2,1,5,1,1,2,1,1,1,4,4,1,3,3,1,5,4,4,3,4,3,3,1,1,3,4,1,5,5,2,5,2,2,4,1,2,5,2,1,2,5,4,1,1,1,1,1,4,1,1,3,1,5,2,5,1,3,1,5,3,3,2,2,1,5,1,1,1,2,1,1,2,1,1,2,1,5,3,5,2,5,2,2,2,1,1,1,5,5,2,2,1,1,3,4,1,1,3,1,3,5,1,4,1,4,1,3,1,4,1,1,1,1,2,1,4,5,4,5,5,2,1,3,1,4,2,5,1,1,3,5,2,1,2,2,5,1,2,2,4,5,2,1,1,1,1,2,2,3,1,5,5,5,3,2,4,2,4,1,5,3,1,4,4,2,4,2,2,4,4,4,4,1,3,4,3,2,1,3,5,3,1,5,5,4,1,5,1,2,4,2,5,4,1,3,3,1,4,1,3,3,3,1,3,1,1,1,1,4,1,2,3,1,3,3,5,2,3,1,1,1,5,5,4,1,2,3,1,3,1,1,4,1,3,2,2,1,1,1,3,4,3,1,3")
-//console.log("number of fish: ",res)
