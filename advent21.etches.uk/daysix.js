@@ -4,7 +4,6 @@ function solutionPart1(inputData) {
     return numberOfFish;
 }
 function solutionPart2(inputData) {
-    //inputData = '3,4,3,1,2'
     const dataArray = inputData.split(',')
     numberOfFish = laternfishSimulator(dataArray, 256)
     return numberOfFish;
