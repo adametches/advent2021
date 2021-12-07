@@ -1,36 +1,20 @@
 function solutionPart1(inputData) {
-     
-    //inputData = "16,1,2,0,4,2,7,1,2,14"
     const dataArray = inputData.split(',')
-    var solution;
-    var leastFuel ;
-
+    var solution, leastFuel 
     dataArray.forEach(endposition => {
         fuel = 0;
-        dataArray.forEach(crabposition => {
-            fuel += Math.abs(crabposition - endposition)          
-        });
+        dataArray.forEach(crabposition => {fuel += Math.abs(crabposition - endposition)});
         if (leastFuel == undefined || fuel < leastFuel){
             leastFuel = fuel
             solution = {endposition:endposition,leastFuel:leastFuel}
         }
     });
-    console.log(solution)
-
-    
     return solution.leastFuel;   
 }
 function solutionPart2(inputData) {
-     
-    //inputData = "16,1,2,0,4,2,7,1,2,14"
-
-    const dataArray = inputData.split(',')
-
-    maxEndPosition = Math.max(...dataArray)
-    var solution;
-    var leastFuel ;
-
-
+    const dataArray = inputData.split(',');
+    maxEndPosition = Math.max(...dataArray);
+    var solution, leastFuel ;
     for (endposition = 1; endposition <=maxEndPosition; endposition++) {
         fuel = 0;
         dataArray.forEach(crabposition => {
@@ -42,8 +26,5 @@ function solutionPart2(inputData) {
             solution = {endposition:endposition,leastFuel:leastFuel}
         }
     }
-    console.log(solution)
-
-    
     return solution.leastFuel;      
 }
