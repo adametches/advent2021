@@ -62,13 +62,13 @@
             document.head.appendChild(script);
 
             function loadSolution() {
-                dataLocation = "https://raw.githubusercontent.com/adametches/advent2021/main/advent21.etches.uk/" + solutionDay + "data.txt";
+                dataLocation = "https://raw.githubusercontent.com/adametches/advent2021/day9/advent21.etches.uk/" + solutionDay + "data.txt";
                 $.get(dataLocation, function (data) {
                     inputData = data;
                 });
 
 
-                solutionLocation = "https://raw.githubusercontent.com/adametches/advent2021/main/advent21.etches.uk/" + solutionDay + ".js";
+                solutionLocation = "https://raw.githubusercontent.com/adametches/advent2021/day9/advent21.etches.uk/" + solutionDay + ".js";
                 $.get(solutionLocation, function (jscode) {
                     solutionJs = jscode;
                     document.getElementById("displaySolutionCode").innerHTML = solutionJs
