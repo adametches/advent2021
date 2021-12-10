@@ -1,5 +1,20 @@
-function solutionPart1(inputData) {
+const characterScoreMap = new Map([
+    [')', 3],
+    [']', 57],
+    ['}', 1197],
+    ['>', 25137],
+  ]);
+  
+  const closingCharacterMap = new Map([
+    ['(', ')'],
+    ['[', ']'],
+    ['{', '}'],
+    ['<', '>'],
+  ]);
 
+
+function solutionPart1(inputData) {
+/*
     inputData = `[({(<(())[]>[[{[]{<()<>>
 [(()[<>])]({[<{<<[]>>(
 {([(<{}[<>[]}>{[]{[(<()>
@@ -10,46 +25,36 @@ function solutionPart1(inputData) {
 [<(<(<(<{}))><([]([]()
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]`
-
-    const dataArray = inputData.split('\n').map(x => x.split(''))
-    const startsmap = new Map([
-        ['<', '>'],
-        ['{', '}'],
-        ['(', ')'],
-        ['[', ']'],
-        [']', '['],
-        [')', '('],
-        ['}', '{'],
-        ['>', '<']
-    ])
-    for (i = 0; i < 1; i++) {
-        var line = dataArray[i]
-        var cont = true
-        while (cont){
-            cont = false
-            var length = line.length
-           
-            for (j = 0;j<line.length;i++){
-                if (line[j] == startsmap.get(line[j+1])){
-                    line.splice(j,2)
-                }
-
+*/
+    //const dataArray = inputData.split('\n').map(x => x.split(''))
+   
+      return inputData.split('\n').reduce((score, line) => {
+        const characters = line.trim().split('');
+        const history = [];
+    
+        for (let i = 0; i < characters.length; i++) {
+          const currentCharacter = characters[i];
+    
+          if (closingCharacterMap.has(currentCharacter)) {
+            history.push(currentCharacter);
+          } else {
+            const lastOpeningCharacter = history.slice(-1)[0];
+            const lastClosingCharacter = closingCharacterMap.get(lastOpeningCharacter);
+    
+            if (lastClosingCharacter === currentCharacter) {
+              history.pop();
+            } else {
+              score += characterScoreMap.get(currentCharacter);
+              break;
             }
-            if (line.length < length) cont = true;
-            console.log(line)
-            
+          }
         }
-        console.log(line)
-
-
-
+    
+        return score;
+      }, 0);
     }
 
 
-
-
-return "part1";
-}
 function solutionPart2(inputData) {
     inputData = `One
     Two
