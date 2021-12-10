@@ -1,65 +1,64 @@
-const characterScoreMap = new Map([
-    [')', 3],
-    [']', 57],
-    ['}', 1197],
-    ['>', 25137],
-  ]);
-  
-  const closingCharacterMap = new Map([
-    ['(', ')'],
-    ['[', ']'],
-    ['{', '}'],
-    ['<', '>'],
-  ]);
-
 
 function solutionPart1(inputData) {
-/*
-    inputData = `[({(<(())[]>[[{[]{<()<>>
-[(()[<>])]({[<{<<[]>>(
-{([(<{}[<>[]}>{[]{[(<()>
-(((({<>}<{<{<>}{[]{[]{}
-[[<[([]))<([[{}[[()]]]
-[{[{({}]{}}([{[{{{}}([]
-{<[[]]>}<{[{[{[]{()[[[]
-[<(<(<(<{}))><([]([]()
-<{([([[(<>()){}]>(<<{{
-<{([{{}}[<[[[<>{}]]]>[]]`
-*/
-    //const dataArray = inputData.split('\n').map(x => x.split(''))
-   
-      return inputData.split('\n').reduce((score, line) => {
-        const characters = line.trim().split('');
-        const history = [];
-    
-        for (let i = 0; i < characters.length; i++) {
-          const currentCharacter = characters[i];
-    
-          if (closingCharacterMap.has(currentCharacter)) {
-            history.push(currentCharacter);
-          } else {
-            const lastOpeningCharacter = history.slice(-1)[0];
-            const lastClosingCharacter = closingCharacterMap.get(lastOpeningCharacter);
-    
-            if (lastClosingCharacter === currentCharacter) {
-              history.pop();
-            } else {
-              score += characterScoreMap.get(currentCharacter);
-              break;
-            }
-          }
+  const endingMap = new Map([
+    ['(', ')'], ['[', ']'], ['{', '}'], ['<', '>'],
+  ]);
+  const scoreMap = new Map([
+    [')', 3], [']', 57], ['}', 1197], ['>', 25137],
+  ]);
+  var score = 0;
+  const dataArray = inputData.split('\n').map(x => x.split(''))
+  for (lineCount = 0; lineCount < dataArray.length; lineCount++) {
+    parsed = [];
+    const chars = dataArray[lineCount];
+    for (let i = 0; i < chars.length; i++) {
+      const char = chars[i];
+      if (endingMap.has(char)) { parsed.push(char) }
+      else {
+        const lastChar = parsed.slice(-1)[0];
+        const lastEndingChar = endingMap.get(lastChar);
+        if (lastEndingChar === char) parsed.pop()
+        else {
+          score += scoreMap.get(char);
+          break;
         }
-    
-        return score;
-      }, 0);
+      }
     }
+  }
+  return score
+}
 
 
 function solutionPart2(inputData) {
-    inputData = `One
-    Two
-    Three`
 
-    const dataArray = inputData.split('\n')
-    return "part2";
+  const endingMap = new Map([
+    ['(', ')'], ['[', ']'], ['{', '}'], ['<', '>'],
+  ]);
+  const scoreMap = new Map([
+    [')', 3], [']', 57], ['}', 1197], ['>', 25137],
+  ]);
+  var scores = [];
+  const dataArray = inputData.split('\n').map(x => x.split(''))
+  for (lineCount = 0; lineCount < dataArray.length; lineCount++) {
+    parsed = [];
+    const chars = dataArray[lineCount];
+    console.log("LINE: ", lineCount)
+    for (let i = 0; i < chars.length; i++) {
+      const char = chars[i];
+      if (endingMap.has(char)) { parsed.push(char) }
+      else {
+        const lastChar = parsed.slice(-1)[0];
+        const lastEndingChar = endingMap.get(lastChar);
+        if (lastEndingChar === char) parsed.pop()
+        else {
+          break;
+        }
+      }
+    }
+    parsed.reverse();
+    scores.push(parsed.reduce((total, character) => {
+      return total * 5 + scoreMap.get(endingMap.get(character));
+    }, 0));
+  }
+  return scores.slice(Math.floor(scores.length / 2))[0];
 }
