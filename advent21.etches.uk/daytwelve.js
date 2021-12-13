@@ -1,110 +1,130 @@
+
 function solutionPart1(inputData) {
+    inputData = `nu-start
+rt-start
+db-qh
+PE-end
+sl-rt
+qh-end
+ZH-rt
+nu-rt
+PE-db
+db-sl
+nu-ZH
+nu-qh
+PE-qh
+ZH-db
+ne-end
+ne-ZH
+QG-db
+qh-sl
+ZH-qh
+start-ZH
+nu-PE
+uf-db
+ne-sl`
 
-    inputData = `start-A
-A-B
-A-end`
+    const graph = {};
+    inputData.split('\n').map(x => {
+        const [from, to] = x.trim().split("-")
+        if (!graph[from]) {
+            graph[from] = [];
+        }
+        if (!graph[to]) {
+            graph[to] = [];
+        }
+        graph[from].push(to);
+        graph[to].push(from);
+        
+    });
 
-
-    const dataArray = inputData.split('\n').map(row => row.split('-'))
-    const starts = dataArray.map(x => x[0])
-    const ends = dataArray.map(x => x[1])
-    var nodes = starts.concat(ends).filter((v, i, a) => a.indexOf(v) === i);
-    var g = new Graph(dataArray.length);
-    for (let i = 0; i < nodes.length; i++) {
-        g.addNode(nodes[i]);
-    }
-    for (let i = 0; i < dataArray.length; i++) {
-        g.addEdge(dataArray[i][0], dataArray[i][1]);
-    }
-    g.printGraph()
-    let paths = g.countPaths('start','end')
-    return paths;
+    const paths = [];
+    part1DepthFirstSearch(graph,'start', [], paths)
+    return (paths.length);
 }
 function solutionPart2(inputData) {
-    inputData = `One
-Two
-Three`
-    const dataArray = inputData.split('\n')
-    return "part2";
+    inputData = `nu-start
+    rt-start
+    db-qh
+    PE-end
+    sl-rt
+    qh-end
+    ZH-rt
+    nu-rt
+    PE-db
+    db-sl
+    nu-ZH
+    nu-qh
+    PE-qh
+    ZH-db
+    ne-end
+    ne-ZH
+    QG-db
+    qh-sl
+    ZH-qh
+    start-ZH
+    nu-PE
+    uf-db
+    ne-sl`
+    
+        const graph = {};
+        inputData.split('\n').map(x => {
+            const [from, to] = x.trim().split("-")
+            if (!graph[from]) {
+                graph[from] = [];
+            }
+            if (!graph[to]) {
+                graph[to] = [];
+            }
+            graph[from].push(to);
+            graph[to].push(from);
+            
+        });
+    
+        const paths = [];
+        part2DepthFirstSearch(graph,'start', [], false,paths)
+        return (paths.length);
+}
+function isSmallCave(string) {
+    return /[a-z]/.test(string)
+}
+function part1DepthFirstSearch(graph,node, visited, paths) {
+    visited.push(node)
+    if (node === 'end') {
+        paths.push(visited.join`,`);
+        return;
+    }
+    for (const neighbour of graph[node]) {
+        if (isSmallCave(neighbour) && visited.includes(neighbour)) {
+            continue;
+        }
+        part1DepthFirstSearch(graph, neighbour, [...visited], paths);
+    }
 }
 
-class Graph {
-    constructor(numberOfEdges) {
-        this.numberOfEdges = numberOfEdges;
-        this.AdjList = new Map();
+function part2DepthFirstSearch(graph,node, visited, visitedTwice, paths) {
+    visited.push(node)
+    if (node === 'end') {
+        paths.push(visited.join`,`);
+        return;
     }
-
-    addNode(n) {
-        // initialize the adjacent list with a
-        // null array
-        this.AdjList.set(n, []);
-    }
-    addEdge(n1, n2) {
-        this.AdjList.get(n1).push(n2);
-        this.AdjList.get(n2).push(n1);
-    }
-
-    countPaths(start, end) {
-        let visited = []
-        this.paths(start,end)
-    }
-    paths(s,e,route=[]){
-        if (s===e){
-            route.push(e)
-            console.log(route)
-            return;
+    for (const neighbour of graph[node]) {
+        if (neighbour === 'start'){
+            continue
         }
-        let path = this.AdjList.get(s).filter(x=>x!='start')
-        route.push(s)
-        for (let i=0;i<path.length;i++){
-            
-            if (route.filter(x=>x===path[i]).length < this.AdjList.get(s).length)
-            {
-            this.paths(path[i],e,route)
+        if (isSmallCave(neighbour) && visited.includes(neighbour)){
+            if (visitedTwice){
+                continue;
             }
+            if (visited.filter(x=>x===neighbour).length >= 2){
+            continue;
+            }
+            part2DepthFirstSearch(graph, neighbour, [...visited],true, paths);
         }
-
-    }
-
-    printGraph() {
-        var get_keys = this.AdjList.keys();
-        for (var i of get_keys) {
-            var get_values = this.AdjList.get(i);
-            var conc = "";
-            for (var j of get_values)
-                conc += j + " ";
-            console.log(i + " -> " + conc);
+        else{
+            part2DepthFirstSearch(graph, neighbour, [...visited],visitedTwice, paths);
         }
     }
-
-    // Main DFS method
-    dfs(startingNode) {
-
-        var visited = {};
-
-        this.DFSUtil(startingNode, visited);
-    }
-
-    // Recursive function which process and explore
-    // all the adjacent vertex of the vertex with which it is called
-    DFSUtil(vert, visited) {
-        visited[vert] = true;
-        console.log(vert);
-        
-        var get_neighbours = this.AdjList.get(vert);
-
-        for (var i in get_neighbours) {
-            var get_elem = get_neighbours[i];
-            if (!visited[get_elem])
-                this.DFSUtil(get_elem, visited);
-        }
-    }
-
-
-
-
-
-
 }
 
 
