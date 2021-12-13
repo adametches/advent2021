@@ -923,19 +923,25 @@ function solutionPart1(inputData) {
 1308,574
 1109,707
 1032,614
-499,152`
-  
-    const dataArray = inputData.split('\n').map(row => row.trim().split(','))
+499,152
 
-    let breakIndex = 0
-    for (i = 0; i < dataArray.length; i++) {
-        if (dataArray[i].length === 1) {
-            breakIndex = i
-        }
-    }
-    //const dots = dataArray.splice(0, breakIndex - 1).filter(x=>x[0]!='')
-    //const folds = dataArray.filter(x => x[0] != '').map(x => x[0].replace('fold along ', ''))
-    const dots = dataArray;
+fold along x=655
+fold along y=447
+fold along x=327
+fold along y=223
+fold along x=163
+fold along y=111
+fold along x=81
+fold along y=55
+fold along x=40
+fold along y=27
+fold along y=13
+fold along y=6`
+  
+    const dataArray = inputData.split('\n')//.map(row => row.trim().split(','))
+    const folds= dataArray.filter(x=>x.startsWith("fold")).map(x => x.replace('fold along ', ''))
+    const dots= dataArray.filter(x=>!x.startsWith("fold")).filter(x=>x!='').map(row => row.trim().split(','))
+    
     const maxY = dots.map(x => x[1]).map(Number).sort((a, b) => a - b).splice(-1)[0] + 1
     const maxX = dots.map(x => x[0]).map(Number).sort((a, b) => a - b).splice(-1)[0] + 1
     let grid = Array.from(Array(maxY), () => new Array(maxX).fill('.'))
@@ -945,8 +951,6 @@ function solutionPart1(inputData) {
         grid[y][x] = '#'
     }
 
-    const folds = ['x=655','y=447','x=327','y=223','x=163','y=111','x=81','y=55','x=40','y=27','y=13','y=6'];
-    
     for (let i = 0; i < 1;i++){
         grid = fold(folds[i], grid)
     }
