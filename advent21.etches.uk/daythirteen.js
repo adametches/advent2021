@@ -1,5 +1,5 @@
 
-function solutionPart1(inputData) {
+function solutionPart1(inputData, full=false) {
 
    inputData = `1148,688
 1020,159
@@ -950,8 +950,9 @@ fold along y=6`
         [x, y] = dots[i]
         grid[y][x] = '#'
     }
-
-    for (let i = 0; i < 1;i++){
+    let len = 1;
+    if (full) len = folds.length
+    for (let i = 0; i < len;i++){
         grid = fold(folds[i], grid)
     }
 
@@ -992,7 +993,6 @@ function fold(foldString, grid) {
             }
         }
     }
-
     return first;
 }
 
@@ -1002,26 +1002,16 @@ function replaceValue(cell1, cell2) {
         value = cell2;
     }
     else if (cell1 === '#' && cell2 === '#') {
-        //value = 1
         value = '#'
     }
-    //else if (typeof cell1 === 'number' && cell2==='#'){
-    //    value = cell1 + 1
-    //}
     else {
         value = cell1
     }
-
     return value;
-
 }
 
 function solutionPart2(inputData) {
-    inputData = `One
-Two
-Three`
-    const dataArray = inputData.split('\n')
-    return "part2";
+   solutionPart1(inputData,true)
 }
 
 function print2dArray(array) {
