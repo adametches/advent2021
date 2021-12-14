@@ -1,5 +1,5 @@
 function solutionPart1(inputData) {
-     
+
     inputData = `NNCB
 
 CH -> B
@@ -22,30 +22,30 @@ CN -> C`
 
     const dataArray = inputData.split('\n')
     let polymerTemplate = dataArray[0].split('')
-    const rules = new Map(dataArray.slice(2).map(x=>x.split(" -> ")))
-    let newPoly = '';
-    for (let step =1;step <5;step++  ){
+    const rules = new Map(dataArray.slice(2).map(x => x.split(" -> ")))
+    let newPoly = polymerTemplate;
+    let stpPoly = ''
+    for (let step = 1; step < 5; step++) {
 
-    
-    for (let i = 0;i < polymerTemplate.length -1;i++)
-    {
-        polyPair = polymerTemplate[i] + rules.get(polymerTemplate[i]+polymerTemplate[i+1]) + polymerTemplate[i+1]
-        newPoly = newPoly + polyPair
-        
+        console.log(newPoly)
+        for (let i = 0; i < newPoly.length - 1; i++) {
+            polyPair = polymerTemplate[i] + rules.get(polymerTemplate[i] + polymerTemplate[i + 1]) + polymerTemplate[i + 1]
+            stpPoly = stpPoly + polyPair
+
+        }
+        newPoly = stpPoly.split('')
+        console.log(stpPoly)
+        //polymerTemplate = newPoly.split('')
     }
 
-    console.log(newPoly)
-    //polymerTemplate = newPoly.split('')
-}
-    
-    return "part1";   
+    return "part1";
 }
 function solutionPart2(inputData) {
     inputData = `One
 Two
 Three`
     const dataArray = inputData.split('\n')
-    return "part2";   
+    return "part2";
 }
 
 function print2dArray(array) {
@@ -57,7 +57,7 @@ function print2dArray(array) {
         });
         printrwo = printrwo.substring(0, printrwo.length - 1);
         console.log(printrwo)
-        
+
     });
 
 }
