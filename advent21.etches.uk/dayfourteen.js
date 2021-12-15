@@ -20,7 +20,7 @@ BC -> B
 CC -> N
 CN -> C`
 
-inputData = `SHHBNFBCKNHCNOSHHVFF
+    inputData = `SHHBNFBCKNHCNOSHHVFF
 
 CK -> N
 VP -> B
@@ -123,60 +123,80 @@ CN -> C
 SO -> P
 OS -> O`
 
-
     const dataArray = inputData.split('\n')
     let polymerTemplate = dataArray[0].split('')
     const rules = new Map(dataArray.slice(2).map(x => x.split(" -> ")))
     let newPoly = [];
-    console.log(newPoly.toString())
-    for (let step = 1; step < 41; step++) { 
-        console.log('Step ',step)
-        
-        for (let i = 0; i < polymerTemplate.length - 1; i++) {    
-           newP = rules.get(polymerTemplate[i]+polymerTemplate[i+1])
- 
-           newPoly.push(polymerTemplate[i])
-           newPoly.push(newP)
+    for (let step = 1; step < 11; step++) {
+        for (let i = 0; i < polymerTemplate.length - 1; i++) {
+            newP = rules.get(polymerTemplate[i] + polymerTemplate[i + 1])
+            newPoly.push(polymerTemplate[i])
+            newPoly.push(newP)
         }
-        newPoly.push(polymerTemplate[polymerTemplate.length-1])
+        newPoly.push(polymerTemplate[polymerTemplate.length - 1])
         polymerTemplate = [...newPoly]
-        
         newPoly = [];
-        //polymerTemplate = newPoly.split('')
     }
     let letters = []
-    for (const letter of ['S','H','B','N','F','C','K','O','V']){
-        letters.push({[letter]:letter,length: polymerTemplate.filter(x=>x===letter).length})
+    for (const letter of ['S', 'H', 'B', 'N', 'F', 'C', 'K', 'O', 'V']) {
+        letters.push({ [letter]: letter, length: polymerTemplate.filter(x => x === letter).length })
     }
-    letters.sort((a,b) => b.length-a.length)
+    letters.sort((a, b) => b.length - a.length)
     console.log(letters)
-let val = letters[0].length - letters[letters.length-1].length
+    let val = letters[0].length - letters[letters.length - 1].length
     return val;
 }
-function insertAt(array, index, el) {
-    array.splice(index, 0, el);
-}
+
 function solutionPart2(inputData) {
-    inputData = `One
-Two
-Three`
+    inputData = `NNCB
+
+CH -> B
+HH -> N
+CB -> H
+NH -> C
+HB -> C
+HC -> B
+HN -> C
+NN -> C
+BH -> H
+NC -> B
+NB -> B
+BN -> B
+BB -> N
+BC -> B
+CC -> N
+CN -> C`
     const dataArray = inputData.split('\n')
+    let polymerTemplate = dataArray[0].split('')
+    const rules = new Map(dataArray.slice(2).map(x => x.split(" -> ")))
+    const pairCounts = {};
+    for (let i = 0; i < polymerTemplate.length - 1; i++) {
+        pair = polymerTemplate[i] + polymerTemplate[i + 1]
+        pairCounts[pair]=1
+
+    }
+    console.log(pairCounts)
+    for (let step = 1; step < 3; step++) {
+        for (const [key, value] of Object.entries(pairCounts)) {
+  
+            newP = rules.get(key)
+            if (pairCounts[key.charAt(0)+newP] == undefined){
+                pairCounts[key.charAt(0)+newP]=1
+            }
+            else{
+            pairCounts[key.charAt(0)+newP]+=1}
+        }
+    
+    }
+    console.log('NBCCNBBBCBHCB'.split('').sort().toString())
+    let count = []
+    for (const [key, value] of Object.entries(pairCounts)) {
+        let valueCount
+    }
+    
     return "part2";
 }
 
-function print2dArray(array) {
-    array.forEach(rwo => {
-        let printrwo = '['
-        rwo.forEach(cell => {
 
-            printrwo += cell + ']['
-        });
-        printrwo = printrwo.substring(0, printrwo.length - 1);
-        console.log(printrwo)
-
-    });
-
-}
-
-console.log(`Part 1: ${solutionPart1()}`);
+//console.log(`Part 1: ${solutionPart1()}`);
 console.log(`Part 2: ${solutionPart2()}`);
