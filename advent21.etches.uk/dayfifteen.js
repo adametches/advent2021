@@ -102,35 +102,22 @@ function solutionPart1(inputData) {
     9183473625115559878297612713929779999988194828441892889773271387893175317763491576739892293297229943
     1456473931721698787995562828993762297498689998699535455881892534296898196126756968597779913784918896`
 
-/*
-    inputData = `1163751742
-    1381373672
-    2136511328
-    3694931569
-    7463417111
-    1319128137
-    1359912421
-    3125421639
-    1293138521
-    2311944581`
+    /*
+        inputData = `1163751742
+        1381373672
+        2136511328
+        3694931569
+        7463417111
+        1319128137
+        1359912421
+        3125421639
+        1293138521
+        2311944581`
+        
     */
-
     const dataArray = inputData.split('\n').map(row => row.trim().split('').map(Number))
-    
-    const paths = [];
-
-    var startTime = performance.now()
-    calculatePath(dataArray, [0, 0], [], 0, paths)
-    var endTime = performance.now()
-    console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
-    console.log(paths[0].cost)
-    for (const item of paths[0].visited) {
-        console.log(item)
-
-    }
-
-
-    return 'result';
+    let result = minPathSum(dataArray) - dataArray[0][0];
+    return result;
 }
 function solutionPart2(inputData) {
     inputData = `One
@@ -139,53 +126,40 @@ Three`
     const dataArray = inputData.split('\n')
     return "part2";
 }
+function minPathSum(grid) {
+    let m = grid.length;
+    let n = grid[0].length;
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (i == 0 && j == 0)
+                continue;
 
-function calculatePath(grid, node, visited, cost, paths) {
-    if (node[1] > grid.length - 1 || node[0] > grid[0].length - 1) {
-        visited = [];
-        return;
-    }
-    if (node[1] === grid[0].length - 1 && node[0] === grid.length - 1) {
-        console.log('soltion')
-        if (paths.length === 0) {
-            paths.push({ visited: visited, cost: cost })
+            if (i == 0) {
+                grid[i][j] += grid[i][j - 1];
+            } else if (j == 0) {
+                grid[i][j] += grid[i - 1][j];
+            } else {
+                grid[i][j] += Math.min(grid[i][j - 1], grid[i - 1][j]);
+            }
         }
-        else if (cost < paths[0].cost) {
-            paths[0] = ({ visited: visited, cost: cost })
-        }
-
     }
+    return grid[m - 1][n - 1];
+};
 
-    visited.push(node)
-    let currentX = node[1]
-    let currentY = node[0]
-    cost += grid[currentY][currentX]
-
-    const next = [/* current */[1, 0],
-     [0, 1]]
-    for (const arr of next) {
-    
-        [dx,dy] = arr;
-        let x = currentX + dx;
-        let y = currentY + dy;
-        calculatePath(grid, [y, x], [...visited], cost, paths)
-       
-    }
-}
 
 function print2dArray(array) {
-            array.forEach(rwo => {
-                let printrwo = '['
-                rwo.forEach(cell => {
+    array.forEach(rwo => {
+        let printrwo = '['
+        rwo.forEach(cell => {
 
-                    printrwo += cell + ']['
-                });
-                printrwo = printrwo.substring(0, printrwo.length - 1);
-                console.log(printrwo)
+            printrwo += cell + ']['
+        });
+        printrwo = printrwo.substring(0, printrwo.length - 1);
+        console.log(printrwo)
 
-            });
+    });
 
-        }
+}
 
 console.log(`Part 1: ${solutionPart1()}`);
 //console.log(`Part 2: ${solutionPart2()}`);
