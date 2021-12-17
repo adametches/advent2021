@@ -292,7 +292,7 @@ function minPathSum2(map){
           .from({ length: map.length })
           .map(() => Infinity));
     
-      const walk = (cost, [px, py]) => {
+      const path = (cost, [px, py]) => {
         if (cost >= distances[py][px]) {
           return;
         }
@@ -323,11 +323,11 @@ function minPathSum2(map){
             continue;
           }
     
-          walk(cost + map[ny][nx], [nx, ny]);
+          path(cost + map[ny][nx], [nx, ny]);
         }
       };
     
-      walk(0, [0, 0]);
+      path(0, [0, 0]);
     
       return lowestTotalRisk;
 
