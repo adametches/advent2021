@@ -239,20 +239,23 @@ function solutionPart2(inputData) {
     const dataArray = inputData.split('\n').map(row => row.trim().split('').map(Number))
     let caveMap = []
     for (let i = 0; i < 5; i++) {
-        let tile = dataArray.map(a => a.map(c => c + i).map(d => { if (d > 9) return 1; else return d }))
 
-        caveMap = caveMap.concat(tile);
+        let tile = dataArray.map(a => a.map(c => c + i).map(d => { if (d > 9) return d - 9; else return d }))
+        caveMap = caveMap.concat(tile)
+
+
     }
+
     for (let i = 0; i < caveMap.length; i++) {
         let start = caveMap[i]
         for (let j = 1; j < 5; j++) {
-            tile = start.map(c => c + j).map(d => { if (d > 9) return 1; else return d })
+            tile = start.map(c => c + j).map(d => { if (d > 9) return d - 9; else return d })
             caveMap[i] = caveMap[i].concat(tile)
         }
 
     }
 
-    print2dArray(caveMap)
+
     let result = minPathSum(caveMap) - caveMap[0][0];
 
     return result;
@@ -282,14 +285,14 @@ function print2dArray(array) {
         let printrwo = ''
         rwo.forEach(cell => {
 
-            printrwo += cell 
+            printrwo += cell
         });
-        
+
         console.log(printrwo)
 
     });
 
 }
 
-//console.log(`Part 1: ${solutionPart1()}`);
+console.log(`Part 1: ${solutionPart1()}`);
 console.log(`Part 2: ${solutionPart2()}`);
