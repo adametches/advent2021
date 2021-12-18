@@ -1,12 +1,15 @@
 function solutionPart1(inputData) {
 
-    inputData = `38006F45291200`
-    inputData = 'EE00D40C823060'
-    inputData = '8A004A801A8002F478'
+    
+
+    inputData = 'D2FE28' //one value = 2021
+    inputData = `38006F45291200` //two
+    inputData = 'EE00D40C823060' //three
+    inputData = '8A004A801A8002F478' // four
     const binaryNumber = inputData.split('').map(d => parseInt(d, 16).toString(2).padStart(4, '0')).join('')
     packet = decodePacket(binaryNumber,[])
-    console.log(packet)
-    return packet.sumOfVersions();
+    console.log(packet[0])
+    return packet[0].sumOfVersions();
 }
 function solutionPart2(inputData) {
     inputData = `One
@@ -18,64 +21,74 @@ Three`
 
 
 function decodePacket(packetText, packetArray) {
-    console.log('decodePacket', packetText)
+    //console.log('literal packet')
+    //console.log('decodePacket', packetText)
     const packetVersion = parseInt(packetText.substring(0, 3), 2)
     const packetType = parseInt(packetText.substring(3, 6), 2)
     let packetContent = packetText.substring(6)
     if (packetType == 4) {
-        let binaryString = ''
+        packetValuebinary = '';
+        //console.log(packetContent)
         while (packetContent.length > 0) {
-
-            binaryString += packetContent.substring(1, 5)
-
-            if (packetContent[0] == '0') {
-
-                packetContent = ''
-            }
+            let leadingBit = packetContent[0]
+            packetValuebinary += packetContent.substring(1, 5)   
             packetContent = packetContent.substring(5)
-
+            if ( leadingBit == '0') {
+                const packetValue = parseInt(packetValuebinary, 2);
+                return [new Packet(packetVersion,packetType,packetValue),packetContent]
+            }   
         }
-        const packetValue = parseInt(binaryString, 2);
+        
 
-        return new Packet(packetVersion,packetType,packetValue)
+        //return [new Packet(packetVersion,packetType,packetValue),packetContent]
 
        
     
     }
     else{
         // operater package
-        console.log('packet content',packetContent)
+        //console.log('operator packet')
+        //console.log('packet content',packetContent)
         const lengthTypeId = packetContent[0];
-        console.log('lengthTypeId',lengthTypeId)
+        //console.log('lengthTypeId',lengthTypeId)
         const packet =  new Packet(packetVersion,packetType,0)
+        
         if (lengthTypeId  === '0'){
             lengthInBits = packetContent.substring(1, 16)
             let length = parseInt(lengthInBits, 2) 
             packetContent = packetContent.substring(16)
-            console.log('packet content',packetContent)
+            //console.log('packet content',packetContent)
             
-            console.log(length)
-            packet.packetArray.push(decodePacket(packetContent.substring(0,11)))
-            packetContent = packetContent.substring(11)
-            packet.packetArray.push(decodePacket(packetContent.substring(0,16)))
-            packetContent = packetContent.substring(16)
+            //console.log(length)
+            let usedbits = 0;
+            while(usedbits < length){
+                
+                
+                let [subpacket,remainingPacketContent] = decodePacket(packetContent)
+                usedbits = usedbits + packetContent.length - remainingPacketContent.length
+                //console.log('usedbits ',usedbits)
+                packetContent = remainingPacketContent;
+                //console.log('packetContent.length ', packetContent.length)
+                packet.packetArray.push(subpacket)
 
-
+            }
+           
         }
         else{
             lengthInBits = packetContent.substring(1, 12)
             packetContent = packetContent.substring(12)
-            console.log('packet content',packetContent)
+            //console.log('packet content',packetContent)
             let length = parseInt(lengthInBits, 2) 
-            console.log(length)
+            packet.subpackageLength = length;
+            console.log('number of packets ',length)
             while(length > 0){
-                packet.packetArray.push(decodePacket(packetContent.substring(0, 11)))
-                packetContent = packetContent.substring(11)
+                [subpacket,packetContent] = decodePacket(packetContent)
+                packet.packetArray.push(subpacket)
                 length--;
 
             }
         }
-        return packet;
+        return [packet, packetContent];
     }
 
    
