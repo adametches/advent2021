@@ -1,17 +1,4 @@
 function solutionPart1(inputData) {
-
-
-    inputData = `5665114554
-4882665427
-6185582113
-7762852744
-7255621841
-8842753123
-8225372176
-7212865827
-7758751157
-1828544563`
-
     let dataArray = inputData.split('\n').map(row => row.split('').map((Number)))
     dataArray = dataArray.flat()
     let flashes = 0;
@@ -46,18 +33,6 @@ function solutionPart1(inputData) {
     return flashes;
 }
 function solutionPart2(inputData) {
-
-
-    inputData = `5665114554
-4882665427
-6185582113
-7762852744
-7255621841
-8842753123
-8225372176
-7212865827
-7758751157
-1828544563`
 
     let dataArray = inputData.split('\n').map(row => row.split('').map((Number)))
     dataArray = dataArray.flat()
